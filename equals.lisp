@@ -23,8 +23,10 @@ information about its recursive dependent behavior."))
       (= x y)))
 
 (defmethod equals ((x cons) (y cons) &rest keys &key recursive &allow-other-keys)
-  (declare (ignore keys recursive))
-  (tree-equal x y :test #'equals))
+  (declare (ignore keys))
+  (if recursive
+      (equal x y)
+      (tree-equal x y :test #'equals)))
 
 (defmethod equals ((x character) (y character) &rest keys &key recursive (case-sensitive t) &allow-other-keys)
   (declare (ignore keys recursive))
